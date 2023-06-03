@@ -1,5 +1,5 @@
 locals {
-  app_name = "simple-eks-app"
+  app_name = "customer-info"
   env      = "dev"
 
   eks_managed_node_groups = {
