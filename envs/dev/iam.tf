@@ -18,7 +18,6 @@ module "allow_eks_access_iam_policy" {
   })
 }
 
-
 module "eks_admins_iam_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "~>5.15"
@@ -45,7 +44,6 @@ module "eks_iam_user" {
   force_destroy = true
 }
 
-
 module "allow_assume_eks_admins_iam_policy" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
   version = "~>5.15"
@@ -66,7 +64,6 @@ module "allow_assume_eks_admins_iam_policy" {
     ]
   })
 }
-
 
 module "eks_admins_iam_group" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-group-with-policies"
