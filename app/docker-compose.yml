@@ -1,0 +1,11 @@
+version: '3'
+services:
+  customer:
+    image: customer:latest
+    ports:
+      - "3000:3000"
+
+  order:
+    image: order:latest
+    ports:
+      - "3002:3002"

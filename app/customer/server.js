@@ -1,4 +1,5 @@
-import express from "express";
+import express, {raw} from "express";
+import axios from "axios";
 
 const app = express();
 const PORT = 3000;
@@ -26,6 +27,13 @@ app.get('/customers/:id', (req, res) => {
         res.status(404).json({ message: 'User not found' });
     }
 });
+
+app.get('/customers/orders/:id', async (req, res)=> {
+    const { id } = req.params;
+    const customerOrders = await axios.get("http://order:3002/orders/customer/"+id);
+    const data = customerOrders.data;
+    res.json(data);
+})
 
 // Start the server
 app.listen(PORT, () => {
