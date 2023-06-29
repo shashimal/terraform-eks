@@ -12,7 +12,7 @@ locals {
         role = "general"
       }
 
-      instance_types = ["t2.micro"]
+      instance_types = ["t2.small"]
       capacity_type  = "ON_DEMAND"
     }
   }
@@ -31,7 +31,7 @@ module "vpc" {
 
   env                = local.env
   name               = local.app_name
-  azs                = ["us-east-1a", "us-east-1b"]
+  azs                = ["ap-southeast-1a", "ap-southeast-1b"]
   cidr               = "20.0.0.0/16"
   private_subnets    = ["20.0.0.0/19", "20.0.32.0/19"]
   public_subnets     = ["20.0.64.0/19", "20.0.96.0/19"]
