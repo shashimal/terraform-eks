@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: customer-alb
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /customers
+            pathType: Prefix
+            backend:
+              service:
+                name: customer
+                port:
+                  number: 3000
+
+          - path: /customers/orders/
+            pathType: Prefix
+            backend:
+              service:
+                name: customer
+                port:
+                  number: 3000
