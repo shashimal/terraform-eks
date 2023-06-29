@@ -21,4 +21,27 @@ module "eks" {
 
   manage_aws_auth_configmap = true
   aws_auth_roles = var.aws_auth_roles
+  iam_role_additional_policies = {
+    additional = aws_iam_policy.additional.arn
+  }
+}
+
+resource "aws_iam_policy" "additional" {
+  name = "eks-additional-policies"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:GetAuthorizationToken"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
 }
