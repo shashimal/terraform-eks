@@ -1,8 +1,13 @@
 import express, {raw} from "express";
 import axios from "axios";
+import AWS from "aws-sdk";
 
 const app = express();
 const PORT = 3000;
+
+const s3 = new AWS.S3();
+const sqs = new AWS.SQS();
+
 
 // Sample data - Replace with your own data source or database connection
 const customers = [
@@ -34,6 +39,37 @@ app.get('/customers/orders/:id', async (req, res)=> {
     const data = customerOrders.data;
     res.json(data);
 })
+
+//Simple APIs to test service account
+app.get('/reads3', async (req, res) => {
+    s3.listBuckets((err, data) => {
+        if (err) {
+            console.error('Error:', err);
+            res.status(500).send('Error retrieving bucket list');
+        } else {
+            const bucketNames = data.Buckets.map((bucket) => bucket.Name);
+            res.json(bucketNames);
+        }
+    });
+});
+
+app.post('/sqs', (req, res) => {
+    const message  = "test message";
+
+    const params = {
+        QueueUrl: 'https://sqs.ap-southeast-1.amazonaws.com/793209430381/test-eks', // Replace with your SQS queue URL
+        MessageBody: JSON.stringify(message),
+    };
+
+    sqs.sendMessage(params, (err, data) => {
+        if (err) {
+            console.error('Error:', err);
+            res.status(500).send('Error pushing data to SQS');
+        } else {
+            res.send('Data pushed to SQS successfully');
+        }
+    });
+});
 
 // Start the server
 app.listen(PORT, () => {

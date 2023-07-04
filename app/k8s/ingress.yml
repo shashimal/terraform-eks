@@ -26,3 +26,17 @@ spec:
                 name: customer
                 port:
                   number: 3000
+          - path: /reads3/
+            pathType: Prefix
+            backend:
+              service:
+                name: customer
+                port:
+                  number: 3000
+          - path: /sqs/
+            pathType: Prefix
+            backend:
+              service:
+                name: customer
+                port:
+                  number: 3000
