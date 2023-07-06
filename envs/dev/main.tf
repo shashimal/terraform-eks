@@ -51,3 +51,10 @@ module "eks" {
   eks_managed_node_groups = local.eks_managed_node_groups
   aws_auth_roles = local.aws_auth_roles
 }
+
+module "github" {
+  source = "../../modules/github"
+
+  app_name                    = "customer-info"
+  create_github_oidc_provider = true
+}
