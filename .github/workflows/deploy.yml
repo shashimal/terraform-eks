@@ -24,3 +24,7 @@ jobs:
           method: service-account
           k8s-url: ${{ secrets.K8S_API_SERVER }}
           k8s-secret: ${{ secrets.K8S_SECRET }}
+
+      - name: Verify k8s connectivity
+        run: |
+          kubectl auth can-i get pods -n default
