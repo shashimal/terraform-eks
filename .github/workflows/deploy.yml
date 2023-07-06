@@ -28,4 +28,4 @@ jobs:
       - name: Verify k8s connectivity
         run: |
           kubectl auth can-i get pods -n default
-          kubectl get pods -n default
+          kubectl get sa
