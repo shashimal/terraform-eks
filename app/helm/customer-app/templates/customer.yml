@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-customer
+  labels:
+    app: customer
+spec:
+  replicas: {{ .Values.customer.replicaCount }}
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      name: customer
+      labels:
+        app: customer
+    spec:
+      serviceAccountName: {{.Values.customer.serviceAccountName}}
+      containers:
+        - name: customer
+          image: "{{.Values.customer.image.registry}}/{{.Values.customer.image.repository}}"
+          imagePullPolicy: Always
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /customers
+spec:
+  selector:
+    app: customer
+  ports:
+    - protocol: {{.Values.customer.service.protocol | default "TCP"}}
+      port: {{.Values.customer.service.port}}
+      targetPort: {{.Values.customer.service.targetPort}}
+  type: NodePort

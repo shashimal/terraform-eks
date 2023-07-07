@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-order
+  labels:
+    app: order
+spec:
+  replicas: {{.Values.order.replicaCount}}
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      name: order
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: "{{.Values.order.image.registry}}/{{.Values.order.image.repository}}"
+          imagePullPolicy: Always
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order
+spec:
+  selector:
+    app: order
+  ports:
+    - protocol: {{.Values.order.service.protocol | default "TCP"}}
+      port: {{.Values.order.service.port}}
+      targetPort: {{.Values.order.service.targetPort}}
+  type: NodePort

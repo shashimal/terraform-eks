@@ -1,0 +1,25 @@
+customer:
+  replicaCount: 2
+  image:
+    registry: 793209430381.dkr.ecr.ap-southeast-1.amazonaws.com
+    repository: "customer:latest"
+    pullPolicy: IfNotPresent
+
+  serviceAccountName: "s3-sqs"
+
+  service:
+    protocol: TCP
+    port: 3000
+    targetPort: 3000
+
+order:
+  replicaCount: 1
+  image:
+    registry: 793209430381.dkr.ecr.ap-southeast-1.amazonaws.com
+    repository: "order:latest"
+    pullPolicy: IfNotPresent
+
+  service:
+    protocol: TCP
+    port: 3002
+    targetPort: 3002
