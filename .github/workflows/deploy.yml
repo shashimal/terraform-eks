@@ -29,3 +29,14 @@ jobs:
         run: |
           kubectl auth can-i get pods -n default
           kubectl get sa
+
+      - uses: azure/k8s-bake@v2
+        with:
+          renderEngine: 'helm'
+          helmChart: './app/helm/customer-app'
+          overrideFiles: './app/helm/customer-app/values.yaml'
+          overrides: |
+            customer.replicaCount:2
+          releaseName: 'customer-app'
+          helm-version: 'latest'
+        id: bake
