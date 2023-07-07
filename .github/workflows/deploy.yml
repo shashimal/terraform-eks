@@ -50,3 +50,7 @@ jobs:
           strategy: blue-green
           route-method: service
           version-switch-buffer: 0
+
+      - name: Verify k8s connectivity
+        run: |
+          helm uninstall customer-app  ./app/helm/customer-app
