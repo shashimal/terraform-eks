@@ -37,6 +37,7 @@ jobs:
           overrideFiles: './app/helm/customer-app/values.yaml'
           overrides: |
             customer.replicaCount:2
+            order.replicaCount:2
           releaseName: 'customer-app'
           helm-version: 'latest'
         id: bake
