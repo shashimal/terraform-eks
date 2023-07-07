@@ -40,3 +40,12 @@ jobs:
           releaseName: 'customer-app'
           helm-version: 'latest'
         id: bake
+
+      - uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          namespace: default
+          strategy: blue-green
+          route-method: service
+          version-switch-buffer: 0
