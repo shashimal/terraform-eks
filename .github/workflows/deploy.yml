@@ -64,5 +64,5 @@ jobs:
 
       - name: Helm list
         run: |
-          kubectl delete -f ./app/k8s
+          kubectl delete -f ${{ steps.bake.outputs.manifestsBundle }}
           kubectl get pods
