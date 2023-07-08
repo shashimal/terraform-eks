@@ -64,4 +64,5 @@ jobs:
 
       - name: Helm list
         run: |
-          helm list
+          kubectl delete -f ./app/k8s
+          kubectl get pods
