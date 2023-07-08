@@ -64,5 +64,6 @@ jobs:
 
       - name: Helm list
         run: |
-          kubectl delete -f ${{ steps.bake.outputs.manifestsBundle }}
+          kubectl delete deploy -l release=customer-app -n default
+          kubectl delete svc -l release=customer-app -n default
           kubectl get pods
