@@ -64,6 +64,8 @@ jobs:
 
       - name: Helm list
         run: |
-          kubectl delete deploy -l release=customer-app -n default
-          kubectl delete svc -l release=customer-app -n default
-          kubectl get pods
+          kubectl get service | grep customer | awk '{print $1}' | xargs kubectl delete service
+          kubectl get service | grep order | awk '{print $1}' | xargs kubectl delete service
+          kubectl get ingress | grep customer | awk '{print $1}' | xargs kubectl delete Ingress
+          kubectl get deploy | grep customer | awk '{print $1}' | xargs kubectl delete deploy
+          kubectl get deploy | grep order | awk '{print $1}' | xargs kubectl delete deploy
